@@ -1,5 +1,5 @@
 WITH source AS (
-    SELECT * FROM READ_CSV_AUTO('data\csv\olist_order_items_dataset.csv'))
+    SELECT * FROM READ_CSV_AUTO('data/csv/olist_order_items_dataset.csv'))
 
 
 SELECT order_id,
