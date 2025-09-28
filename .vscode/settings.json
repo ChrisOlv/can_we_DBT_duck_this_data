@@ -1,0 +1,11 @@
+{
+    "sqltools.useNodeRuntime": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "DuckDB",
+            "name": "brazilian_ecommerce",
+            "database": "${workspaceFolder:can_we_DBT_duck_this_data}/brazilian_ecommerce/data/dev.duckdb"
+        }
+    ]
+}

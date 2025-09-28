@@ -7,4 +7,8 @@ Shot answer : yes
 
 Long answer : [[link to my article]].
 
+## Data introduction
+This dataset comes from Kaggle (https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
+Data schema : 
 
+![alt text](HRhd2Y0.png)
