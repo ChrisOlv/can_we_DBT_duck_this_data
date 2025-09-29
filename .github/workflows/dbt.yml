@@ -50,7 +50,7 @@ jobs:
           chmod 600 ~/.kaggle/kaggle.json
 
       - name: Ingest data from Kaggle
-        run: python ingest.py 
+        run: python ingestion.py 
 
       # --- Étape dbt ---
       - name: Run dbt build
