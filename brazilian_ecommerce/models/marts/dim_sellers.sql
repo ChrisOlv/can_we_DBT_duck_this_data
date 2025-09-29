@@ -1,0 +1,1 @@
+SELECT * from {{ ref('stg_sellers') }} 
