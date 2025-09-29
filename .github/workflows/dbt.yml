@@ -26,9 +26,7 @@ jobs:
           pip install -r ${{ github.workspace }}/requirements.txt
 
 
-      # --- Étape spécifique à la base de données (CRITIQUE) ---
-      # Nous avons besoin que dbt puisse se connecter à DuckDB.
-      # L'environnement GitHub Actions n'a pas votre fichier profiles.yml
+      # ---duckdb connection
       - name: Configure dbt profile for DuckDB
         run: |
           # Crée le dossier des profils dbt
@@ -58,6 +56,24 @@ jobs:
           cd brazilian_ecommerce
           dbt debug # Vérifie que le profil est correct et la connexion OK
           dbt build 
+          dbt docs generate
+
+      # --- Étape de Déploiement de la Documentation ---
+      - name: Deploy dbt Documentation to GitHub Pages
+
+        run: |
+          cd brazilian_ecommerce
+          cp -r target docs
+        
+      - name: Publish Documentation
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Le dossier 'docs'
+          publish_dir: ./brazilian_ecommerce/docs
+          commit_message: "Automated dbt Docs Update"
+
+
 
       # --- Étape de Nettoyage (Optionnel mais Recommandé) ---
       - name: Clean up files
