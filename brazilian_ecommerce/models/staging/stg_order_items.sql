@@ -10,3 +10,5 @@ shipping_limit_date,
 price,
 freight_value
 FROM source
+WHERE order_id IS NOT NULL
+AND order_item_id IS NOT NULL

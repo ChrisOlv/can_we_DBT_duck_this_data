@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  # 1. Doc fact table
+  - name: fct_orders
+    description: "Table de Faits principale à la granularité de l'article commandé. Elle contient toutes les métriques de vente, de paiement et d'avis. Pour une commande, on peut avoir plusieurs articles commandés."
+    columns:
+      - name: fact_key
+        description: "Clé primaire unique du fait (order_id-order_item_id)."
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Clé étrangère vers la dimension des clients (dim_customers)."
+        tests:
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_id
+      - name: price
+        description: "Prix unitaire de l'article (hors frais de port)."
+
+
+  # 2. Doc dim tables
+  - name: dim_customers
+    description: "Table de dimension des clients, dédoublonnée"
+    columns:
+      - name: customer_id
+        description: "Clé primaire des clients, utilisée pour la jointure avec la table de faits."
+        tests:
+          - unique
+          - not_null
+      - name: customer_unique_id
+        description: "ID unique de l'acheteur (même personne physique)."
