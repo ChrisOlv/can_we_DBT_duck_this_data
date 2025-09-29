@@ -1,9 +1,11 @@
 name: Run dbt pipeline
 
 on:
-  workflow_dispatch:      
+
+  workflow_dispatch: 
+  # 6h00 UTC
   schedule:
-    - cron: "0 6 * * *"   # 6h UTC
+    - cron: "0 6 * * *" 
 
 jobs:
   build:
@@ -23,6 +25,24 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+
+      # --- Étape spécifique à la base de données (CRITIQUE) ---
+      # Nous avons besoin que dbt puisse se connecter à DuckDB.
+      # L'environnement GitHub Actions n'a pas votre fichier profiles.yml
+      - name: Configure dbt profile for DuckDB
+        run: |
+          # Crée le dossier des profils dbt
+          mkdir -p ~/.dbt
+          
+
+          echo "brazilian_ecommerce:
+            target: dev
+            outputs:
+              dev:
+                type: duckdb
+                path: ./brazilian_ecommerce/dev.duckdb
+                threads: 4" > ~/.dbt/profiles.yml
+
       - name: Configure Kaggle API credentials
         run: |
           mkdir -p ~/.kaggle
@@ -30,7 +50,17 @@ jobs:
           chmod 600 ~/.kaggle/kaggle.json
 
       - name: Ingest data from Kaggle
-        run: python ingest.py
+        run: python ingest.py 
 
+      # --- Étape dbt ---
       - name: Run dbt build
-        run: dbt build
+        run: |
+          cd brazilian_ecommerce
+          dbt debug # Vérifie que le profil est correct et la connexion OK
+          dbt build 
+
+      # --- Étape de Nettoyage (Optionnel mais Recommandé) ---
+      - name: Clean up files
+        # Supprime le fichier de base de données généré pour ne pas encombrer l'historique
+        run: rm -f brazilian_ecommerce/dev.duckdb
+        if: always() # S'exécute même si le build échoue
