@@ -1,45 +1,8 @@
-# Can we DBT Duck this data ?
-Full analytics engineering project run locally using : SQL, DBT-core, Duck DB
-
-In 2025, can we execute a full project without using cloud compute ?
-
-Shot answer : yes
-
-Long answer : [[link to my article]].
-
-## Data introduction
-This dataset comes from Kaggle (https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
-
-Data schema : 
-![alt text](HRhd2Y0.png)
-
-## Steps and methodology
-
-
-
-## Orchestration ?
-It's the perfect opportunity to play with github action to orchestrate this project.
-
-### How does that work ?
-
-#### Env
-1. github create a .env with the requirement file
-2. setup dbt
-
-#### Pipeline
-1. get data from kaggle api (csv will probably stays the same, but let's pretend it is our data ingestion)
-2. Run DBT Build : create stagging tables, mart tables, singular tests the key columns, update the duckDB database
-3. Publish new documentation webpage on the
-
-
-
-
-------- test -------
 # 📦 Olist E-Commerce Data Warehouse
 
 ## Project Overview
 
-This project implements a robust, end-to-end **Analytics Engineering (AE) pipeline** to transform raw e-commerce data from Olist (a major Brazilian marketplace) into a clean, query-ready **Star Schema** optimized for analytical reporting.
+This project implements a robust, end-to-end **Analytics Engineering (AE) pipeline** to transform [raw e-commerce data from Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) (a major Brazilian marketplace) into a clean, query-ready **Star Schema** optimized for analytical reporting.
 
 The entire process, from data ingestion to data quality validation, is automated using modern AE tools: **Kaggle** (Source), **Python** (Ingestion), **DuckDB** (Data Warehouse), **dbt** (Transformation), and **GitHub Actions** (Orchestration).
 
