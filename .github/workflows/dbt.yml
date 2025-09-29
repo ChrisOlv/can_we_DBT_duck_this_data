@@ -58,23 +58,23 @@ jobs:
           dbt build 
           dbt docs generate
 
-      # --- Étape de Déploiement de la Documentation ---
-      - name: Deploy dbt Documentation to GitHub Pages
+      # # --- Étape de Déploiement de la Documentation --- pour le moment, comment it pour plus tard #todo
+      # - name: Deploy dbt Documentation to GitHub Pages
 
-        run: |
-          mkdir -p dbt-docs
-          cp -r brazilian_ecommerce/target/* dbt-docs/
+      #   run: |
+      #     mkdir -p dbt-docs
+      #     cp -r brazilian_ecommerce/target/* dbt-docs/
 
-      - name: Publish Documentation to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          # Publie le contenu du dossier dbt-docs/...
-          publish_dir: ./dbt-docs
-          # Et pousse ce contenu sur la branche 'main' (ou 'master')
-          publish_branch: main 
-          # Le commit sera marqué "Automated dbt Docs Update"
-          commit_message: "Automated dbt Docs Update"
+      # - name: Publish Documentation to GitHub Pages
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     # Publie le contenu du dossier dbt-docs/...
+      #     publish_dir: ./dbt-docs
+      #     # Et pousse ce contenu sur la branche 'main' (ou 'master')
+      #     publish_branch: main 
+      #     # Le commit sera marqué "Automated dbt Docs Update"
+      #     commit_message: "Automated dbt Docs Update"
           
       # --- Étape de Nettoyage ---
       - name: Clean up files
