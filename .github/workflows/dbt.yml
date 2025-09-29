@@ -38,7 +38,7 @@ jobs:
             outputs:
               dev:
                 type: duckdb
-                path: ./brazilian_ecommerce/dev.duckdb
+                path: ./dev.duckdb
                 threads: 4" > ~/.dbt/profiles.yml
 
       - name: Configure Kaggle API credentials
@@ -62,21 +62,21 @@ jobs:
       - name: Deploy dbt Documentation to GitHub Pages
 
         run: |
-          cd brazilian_ecommerce
-          cp -r target docs
-        
-      - name: Publish Documentation
+          mkdir -p dbt-docs
+          cp -r brazilian_ecommerce/target/* dbt-docs/
+
+      - name: Publish Documentation to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          # Le dossier 'docs'
-          publish_dir: ./brazilian_ecommerce/docs
+          # Publie le contenu du dossier dbt-docs/...
+          publish_dir: ./dbt-docs
+          # Et pousse ce contenu sur la branche 'main' (ou 'master')
+          publish_branch: main 
+          # Le commit sera marqué "Automated dbt Docs Update"
           commit_message: "Automated dbt Docs Update"
-
-
-
-      # --- Étape de Nettoyage (Optionnel mais Recommandé) ---
+          
+      # --- Étape de Nettoyage ---
       - name: Clean up files
-        # Supprime le fichier de base de données généré pour ne pas encombrer l'historique
         run: rm -f brazilian_ecommerce/dev.duckdb
-        if: always() # S'exécute même si le build échoue
+        if: always()
